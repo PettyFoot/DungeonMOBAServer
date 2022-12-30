@@ -1,6 +1,3 @@
-// Write a message to the console.
-console.log('hello world!');
-
 const { response } = require('express');
 const express = require('express');
 const app = express();
@@ -21,6 +18,6 @@ app.get('/api', (request, response)=>{
     response.json(something);
 })
 
-app.listen(PORT, ()=>{
+app.listen(process.env.PORT || PORT, ()=>{
     console.log(`cool stuff on port ${PORT}`);
 });
