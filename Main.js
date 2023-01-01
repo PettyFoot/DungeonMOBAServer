@@ -60,13 +60,14 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
 app.get('/', (request, response)=>{
-    response.sendFile(__dirname + '/index.html');
-    
+   // response.sendFile(__dirname + '/index.html');
+    console.log("Made get request");
 })
 
 
 app.get('/api', (request, response)=>{
    // response.json();
+   console.log("Made get request with api");
 })
 
 app.post('/api/:user', (req, res) =>{
