@@ -75,6 +75,7 @@ app.post('/api/:user', (req, res) =>{
 
 app.put('/api/:user', (res, req)=>{
     console.log(res.body);
+    console.log("Made put request");
     //updateListing(client, req.params.user, {userName: res.body});
 })
 
