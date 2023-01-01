@@ -80,7 +80,7 @@ app.put('/api/:user', (req, res )=>{
     console.log("Made put request");
     const userAttempt = req.params.user;
     console.log(userAttempt);
-    //updateListing(client, req.params.user, {userName: res.body});
+    updateListing(client, userAttempt, {userName: "user1234"});
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
