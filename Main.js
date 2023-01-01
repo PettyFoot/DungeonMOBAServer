@@ -68,6 +68,7 @@ app.get('/', (request, response)=>{
 app.get('/api', (request, response)=>{
    // response.json();
    console.log("Made get request with api");
+   
 })
 
 app.post('/api/:user', (req, res) =>{
@@ -77,6 +78,7 @@ app.post('/api/:user', (req, res) =>{
 app.put('/api/:user', (res, req)=>{
     console.log(res.body);
     console.log("Made put request");
+    console.log(req.params.user);
     //updateListing(client, req.params.user, {userName: res.body});
 })
 
