@@ -75,8 +75,8 @@ app.post('/api/:user', (req, res) =>{
 
 })
 
-app.put('/api/:user', (res, req)=>{
-    console.log(res.body);
+app.put('/api/:user', (req, res )=>{
+    console.log(req.body);
     console.log("Made put request");
     const userAttempt = req.params.user;
     console.log(userAttempt);
