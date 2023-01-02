@@ -1,18 +1,18 @@
 //Mongo db stuff
 
 const { MongoClient } = require('mongodb');
-
+const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
 async function main(){
    // const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
    // client = new MongoClient(uri);
 
-   const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
-    try {
-        await client.connect()
 
-        await updateListing(client, "user1235", {userName: "user123"});
+    try {
+        await client.connect();
+
+        //await updateListing(client, "user1235", {userName: "user123"});
     
     } catch (e) {
         console.error(e)
@@ -21,14 +21,24 @@ const client = new MongoClient(uri);
     }
 }
 
+
+
 main().catch(console.error);
 
 async function updateListing(client, listingToUpdate, updateListing){
     //await client.connect();
-    console.log("Called updateListing");
-    const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
-    console.log(`${result.matchedCount} documents were found`);
-    console.log(`${result.modifiedCount} were updated`);
+    try {
+        await client.connect();
+        const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
+        console.log(`${result.matchedCount} documents were found`);
+        console.log(`${result.modifiedCount} were updated`);
+    }finally{
+        client.close();
+    }
+   // console.log("Called updateListing");
+  //  const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
+   // console.log(`${result.matchedCount} documents were found`);
+   // console.log(`${result.modifiedCount} were updated`);
 }
 
 const { response } = require('express');
@@ -42,7 +52,7 @@ app.use(express.json());
 app.put('/api/:user', async (req, res )=>{
     try {
         const userAttempt = req.params.user;
-        const result = await updateListing(client, userAttempt, {userName: "user1234"});
+        const result = await updateListing(client, "user123", {userName: "user1235"});
         console.log(result);
         res.end();
     } catch (error) {
