@@ -28,6 +28,8 @@ main().catch(console.error);
 async function updateListing(client, listingToUpdate, updateListing){
     //await client.connect();
     try {
+        const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
         await client.connect();
         const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
         console.log(`${result.matchedCount} documents were found`);
