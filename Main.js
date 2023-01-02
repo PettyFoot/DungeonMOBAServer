@@ -38,6 +38,8 @@ async function createListing(client, newListing){
 
 async function updateListing(client, listingToUpdate, updateListing){
     console.log("Called updateListing");
+    console.log(client);
+    await client.connect();
     const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
     console.log("tried to update");
     console.log(`${result.matchedCount} documents were found`);
