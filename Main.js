@@ -83,7 +83,7 @@ app.put('/api/:user', async (req, res )=>{
     console.log("Made put request");
     const userAttempt = req.params.user;
     console.log(userAttempt);
-    const result = await updateListing(client, userAttempt, {userName: "user1234"});
+   // const result = await updateListing(client, userAttempt, {userName: "user1234"});
     console.log(result);
     res.status(200).end();
     //Something
