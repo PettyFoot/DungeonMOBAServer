@@ -1,12 +1,14 @@
 //Mongo db stuff
 
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {serverSelectionTimeoutMS: 50000});
+
 
 async function main(){
    // const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
    // client = new MongoClient(uri);
+
+   const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
     try {
         await client.connect()
 
