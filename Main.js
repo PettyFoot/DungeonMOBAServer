@@ -2,7 +2,7 @@
 
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, {serverSelectionTimeoutMS: 50000});
 
 async function main(){
    // const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
@@ -38,7 +38,8 @@ async function createListing(client, newListing){
 }
 
 async function updateListing(client, listingToUpdate, updateListing){
-    console.log("Called updateListing");
+    console.log(updateListing);
+    console.log(listingToUpdate);
     //console.log(client);
     await client.connect();
     console.log("Called updateListing");
