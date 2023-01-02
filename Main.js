@@ -9,21 +9,9 @@ async function main(){
    // client = new MongoClient(uri);
     try {
         await client.connect()
-        console.log("Connected");
-       /** await createListing(client, {
-            userName: "user123",
-            password: "password123",
-            Inventory : [
-                {Weapons: [{Blunt : [{ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}, {ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}, {ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}]}, {Sharp : [{ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}]}]},
-                {Treasure: [ {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}]},
-                {QuestItems: [{QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}]}
-            ]
-        }) */
 
-        //[{Weapons: [{key: value}, {}, {}]}, {Treasure:[{}, {}, {}]}, {[{}, {}, {}]}]
-
-       // await updateListing(client, "user1234", {userName: "user1235"});
-        //await listDatabases(client);
+        await updateListing(client, "user1235", {userName: "user123"});
+    
     } catch (e) {
         console.error(e)
     }finally{
@@ -33,21 +21,38 @@ async function main(){
 
 main().catch(console.error);
 
-async function createListing(client, newListing){
-   const result = await client.db("userAccounts").collection("users").insertOne(newListing);
-}
-
 async function updateListing(client, listingToUpdate, updateListing){
-    console.log(updateListing);
-    console.log(listingToUpdate);
-    //console.log(client);
-    await client.connect();
+    //await client.connect();
     console.log("Called updateListing");
     const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
-    console.log("tried to update");
     console.log(`${result.matchedCount} documents were found`);
     console.log(`${result.modifiedCount} were updated`);
 }
+
+const { response } = require('express');
+const express = require('express');
+const app = express();
+const PORT = 8000;
+var path = require('path');
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.json());
+
+app.put('/api/:user', async (req, res )=>{
+    try {
+        const userAttempt = req.params.user;
+        const result = await updateListing(client, userAttempt, {userName: "user1234"});
+        console.log(result);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.end();
+    }
+})
+
+
+async function createListing(client, newListing){
+    const result = await client.db("userAccounts").collection("users").insertOne(newListing);
+ }
 
 async function listDatabases(client){
     const databasesList = await client.db().admin().listDatabases();
@@ -59,13 +64,6 @@ async function listDatabases(client){
 
 //Node API stuff
 
-const { response } = require('express');
-const express = require('express');
-const app = express();
-const PORT = 8000;
-var path = require('path');
-app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.json());
 
 app.get('/', (request, response)=>{
    // response.sendFile(__dirname + '/index.html');
@@ -83,7 +81,7 @@ app.post('/api/:user', (req, res) =>{
 
 })
 
-app.put('/api/:user', async (req, res )=>{
+/**app.put('/api/:user', async (req, res )=>{
     try {
         const userAttempt = req.params.user;
         const result = await updateListing(client, userAttempt, {userName: "user1234"});
@@ -103,8 +101,24 @@ app.put('/api/:user', async (req, res )=>{
     console.log(" this is the result ");
     res.status(200).end(); */
     //Something    dhhwdhwd
-})
+//}) */
 
 app.listen(process.env.PORT || PORT, ()=>{
     //console.log(`cool stuff on port ${PORT}`);
 });
+
+
+   /** await createListing(client, {
+            userName: "user123",
+            password: "password123",
+            Inventory : [
+                {Weapons: [{Blunt : [{ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}, {ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}, {ItemName: "Axe", ItemWeight: 50, Description: "And my Axe!"}]}, {Sharp : [{ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}, {ItemName: "Sword", ItemWeight: 50, Description: "Swing!"}]}]},
+                {Treasure: [ {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}, {ItemName: "unknown", ItemWorth: 0, Description: "Shiny shiny"}]},
+                {QuestItems: [{QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}, {QuestName: "QuestName", QuestWayPoint: [100, 200, 300], Description:"This is a quest"}]}
+            ]
+        }) */
+
+        //[{Weapons: [{key: value}, {}, {}]}, {Treasure:[{}, {}, {}]}, {[{}, {}, {}]}]
+
+       // await updateListing(client, "user1234", {userName: "user1235"});
+        //await listDatabases(client);
