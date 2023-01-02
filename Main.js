@@ -26,7 +26,7 @@ async function main(){
     } catch (e) {
         console.error(e)
     }finally{
-        await client.close();
+        //await client.close();
     }
 }
 
@@ -39,7 +39,7 @@ async function createListing(client, newListing){
 async function updateListing(client, listingToUpdate, updateListing){
     console.log("Called updateListing");
     const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
-   
+    
     console.log(`${result.matchedCount} documents were found`);
     console.log(`${result.modifiedCount} were updated`);
 }
