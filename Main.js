@@ -78,12 +78,13 @@ app.post('/api/:user', (req, res) =>{
 
 })
 
-app.put('/api/:user', (req, res )=>{
+app.put('/api/:user', async (req, res )=>{
     console.log(req.body);
     console.log("Made put request");
     const userAttempt = req.params.user;
     console.log(userAttempt);
-    updateListing(client, userAttempt, {userName: "user1234"});
+    const result = await updateListing(client, userAttempt, {userName: "user1234"});
+    //Something
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
