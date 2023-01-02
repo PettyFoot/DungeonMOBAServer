@@ -80,6 +80,7 @@ app.post('/api/:user', (req, res) =>{
 
 app.put('/api/:user', async (req, res )=>{
     try {
+        const userAttempt = req.params.user;
         const result = await updateListing(client, userAttempt, {userName: "user1234"});
         console.log(result);
         console.log("Reached end of try");
