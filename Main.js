@@ -79,6 +79,15 @@ app.post('/api/:user', (req, res) =>{
 })
 
 app.put('/api/:user', async (req, res )=>{
+    try {
+        const result = await updateListing(client, userAttempt, {userName: "user1234"});
+        console.log(result);
+        console.log("Reached end of try");
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.end();
+    }
     console.log(req.body);
     console.log("Made put request");
     const userAttempt = req.params.user;
@@ -90,5 +99,5 @@ app.put('/api/:user', async (req, res )=>{
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
-    console.log(`cool stuff on port ${PORT}`);
+    //console.log(`cool stuff on port ${PORT}`);
 });
