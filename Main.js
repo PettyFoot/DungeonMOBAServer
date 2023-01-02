@@ -9,6 +9,7 @@ async function main(){
    // client = new MongoClient(uri);
     try {
         await client.connect()
+        console.log("Connected");
        /** await createListing(client, {
             userName: "user123",
             password: "password123",
