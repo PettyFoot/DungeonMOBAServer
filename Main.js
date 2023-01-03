@@ -83,7 +83,7 @@ app.get('/', (request, response)=>{
    // response.sendFile(__dirname + '/index.html');
     console.log("Made get request");
     response.end();
-
+})
 
 app.get('/api', (request, response)=>{
    // response.json();
@@ -92,7 +92,7 @@ app.get('/api', (request, response)=>{
 })
 
 app.post('/api/:user', (req, res) =>{
-    response.end();
+    res.end();
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
