@@ -57,10 +57,13 @@ const db = mongoose.model('User', userSchema);
 app.put('/api/put/:user', async (req, res )=>{
     console.log("hello");
     try {
-        //const userAttempt = req.params.user;
+        const userAttempt = req.params.user;
         console.log("hello try");
         //const result = await db.findOneAndUpdate({userName: "user123"}, {userName: "user1235"});
-        const result = await updateListing(client, "user123", {userName: "user1235"}); //This is how I want to do it
+        const rand = Math.floor(Math.random() * (10-1+1)) +1
+        const newName = "user123" + rand.toString();
+        console.log(rand);
+        const result = await updateListing(client, userAttempt, {userName: newName}); //This is how I want to do it
         console.log(result);
         res.end();
     } catch (error) {
