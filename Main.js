@@ -43,7 +43,7 @@ app.put('/api/put/:user', async (req, res )=>{
     console.log("hello");
     try {
         //const userAttempt = req.params.user;
-        console.log("hello");
+        console.log("hello try");
        // db.findOneAndUpdate("User1234", {userName: "User1235"});
       //  const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
        // console.log(userAttempt);
@@ -96,7 +96,7 @@ app.post('/api/:user', (req, res) =>{
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
-    console.log(`cool stuff on port ${PORT}`);
+    //console.log(`cool stuff on port ${PORT}`);
 });
 
 /**let db,
