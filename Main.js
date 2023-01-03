@@ -42,9 +42,9 @@ const db = mongoose.model('User', userSchema);
 app.put('/api/put/:user', async (req, res )=>{
 
     try {
-        const userAttempt = req.params.user;
+        //const userAttempt = req.params.user;
         console.log("hello");
-        db.findOneAndUpdate("User1234", {userName: "User1235"});
+       // db.findOneAndUpdate("User1234", {userName: "User1235"});
       //  const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
         console.log(userAttempt);
         res.end();
