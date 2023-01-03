@@ -47,7 +47,7 @@ const userSchema = {
    userName: {type: String}
 };
 
-//const db = mongoose.model('User', userSchema);
+const db = mongoose.model('User', userSchema);
 
 app.put('/api/put/:user', async (req, res )=>{
     console.log("hello");
