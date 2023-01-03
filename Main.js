@@ -1,18 +1,23 @@
 //Mongo db stuff
-/**const MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient
 //I usually have proper password in <password>
 const uri = "mongodb+srv://usersDBAdmin:<password>@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
 const client = new MongoClient(uri);
 
 async function main(){
+    console.log("Called main");
     try {
+        console.log("Attempting connection to db");
         await client.connect();
+        console.log("Connected to db");
         //This works as expected
         //await updateListing(client, "user1235", {userName: "user123"}); 
     } catch (e) {
         console.error(e)
     }
-} */
+} 
+
+await main();
 /**
 
 async function main(){
@@ -37,7 +42,7 @@ var path = require('path');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
-const mongoose = require('mongoose');
+/**const mongoose = require('mongoose');
 mongoose.connect("mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority")
 .then(()=> console.log("DB connected")).catch(()=>console.log("Database connection error"));
 
@@ -48,14 +53,14 @@ const userSchema = {
 };
 
 const db = mongoose.model('User', userSchema);
-
+ */
 app.put('/api/put/:user', async (req, res )=>{
     console.log("hello");
     try {
         //const userAttempt = req.params.user;
         console.log("hello try");
-        const result = await db.findOneAndUpdate({userName: "user123"}, {userName: "user1235"});
-      //  const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
+        //const result = await db.findOneAndUpdate({userName: "user123"}, {userName: "user1235"});
+        const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
         console.log(result);
         res.end();
     } catch (error) {
@@ -65,7 +70,9 @@ app.put('/api/put/:user', async (req, res )=>{
 })
 
 async function updateListing(client, listingToUpdate, updateListing){
+    console.log("Called Update Listing");
     try {
+        console.log("Attempting to add to db");
         const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
         console.log(`${result.matchedCount} docs found`);
         console.log(`${result.modifiedCount} docs updated`);
