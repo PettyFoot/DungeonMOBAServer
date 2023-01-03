@@ -1,29 +1,14 @@
 //Mongo db stuff
-
-const MongoClient = require('mongodb').MongoClient
-const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
+/**const MongoClient = require('mongodb').MongoClient
+//I usually have proper password in <password>
+const uri = "mongodb+srv://usersDBAdmin:<password>@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
 const client = new MongoClient(uri);
 
-let db,
-    dbConnectionStr = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority",
-    dbName = 'users'
-
-MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
-    .then(client => {
-        console.log(`Connected to ${dbName} Database`)
-        db = client.db(dbName)
-    })
-
 async function main(){
-   // const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
-   // client = new MongoClient(uri);
-
-
     try {
         await client.connect();
-
-        //await updateListing(client, "user1235", {userName: "user123"});
-    
+        //This works as expected
+        //await updateListing(client, "user1235", {userName: "user123"}); 
     } catch (e) {
         console.error(e)
     }finally{
@@ -31,30 +16,9 @@ async function main(){
     }
 }
 
+main().catch(console.error); */
 
 
-//main().catch(console.error);
-
-async function updateListing(client, listingToUpdate, updateListing){
-    //await client.connect();
-    try {
-        console.log(`attempt`);
-        const uri = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority";
-        const client = new MongoClient(uri);
-        await client.connect();
-        const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
-        console.log(`${result.matchedCount} documents were found`);
-        console.log(`${result.modifiedCount} were updated`);
-    }finally{
-        client.close();
-    }
-   // console.log("Called updateListing");
-  //  const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
-   // console.log(`${result.matchedCount} documents were found`);
-   // console.log(`${result.modifiedCount} were updated`);
-}
-
-const { response } = require('express');
 const express = require('express');
 const app = express();
 const PORT = 8000;
@@ -62,21 +26,42 @@ var path = require('path');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority")
+.then(()=> console.log("DB connected")).catch(()=>console.log("Database connection error"));
+
+const userSchema = {
+    userName: {type: String},
+    password: {type: String},
+};
+
+const db = mongoose.model('User', userSchema);
+
+
+
 app.put('/api/put/:user', async (req, res )=>{
 
-    
     try {
-        db.collection('userAccounts').collection("users").updateOne({userName: "user123" }, {userName: "user1235" });
-        //const userAttempt = req.params.user;
-       // const result = await updateListing(client, "user123", {userName: "user1235"});
-       // console.log(result);
+        const userAttempt = req.params.user;
+        db.findOneAndUpdate("User1234", {userName: "User1235"});
+      //  const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
+        console.log(userAttempt);
         res.end();
     } catch (error) {
         console.log(error);
         res.end();
     }
 })
-
+/**
+async function updateListing(client, listingToUpdate, updateListing){
+    try {
+        const result = await client.db("userAccounts").collection("users").updateOne({userName: listingToUpdate }, {$set: updateListing});
+        console.log(`${result.matchedCount} docs found`);
+        console.log(`${result.modifiedCount} docs updated`);
+    }catch(error){
+        console.log(error);
+    }
+}
 
 async function createListing(client, newListing){
     const result = await client.db("userAccounts").collection("users").insertOne(newListing);
@@ -88,7 +73,7 @@ async function listDatabases(client){
     databasesList.databases.forEach(element => {
         console.log(`- ${element.name}`);
     });
-}
+} */
 
 //Node API stuff
 
@@ -108,6 +93,20 @@ app.get('/api', (request, response)=>{
 app.post('/api/:user', (req, res) =>{
 
 })
+
+app.listen(process.env.PORT || PORT, ()=>{
+    console.log(`cool stuff on port ${PORT}`);
+});
+
+/**let db,
+    dbConnectionStr = "mongodb+srv://usersDBAdmin:colorado7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority",
+    dbName = 'users'
+
+MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
+    .then(client => {
+        console.log(`Connected to ${dbName} Database`)
+        db = client.db(dbName)
+    }) */
 
 /**app.put('/api/:user', async (req, res )=>{
     try {
@@ -131,9 +130,7 @@ app.post('/api/:user', (req, res) =>{
     //Something    dhhwdhwd
 //}) */
 
-app.listen(process.env.PORT || PORT, ()=>{
-    //console.log(`cool stuff on port ${PORT}`);
-});
+
 
 
    /** await createListing(client, {
