@@ -1,7 +1,7 @@
 //Mongo db stuff
 const MongoClient = require('mongodb').MongoClient
 //I usually have proper password in <password>
-const uri = "mongodb+srv://usersDBAdmin:<password>@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
+const uri = "mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
 const client = new MongoClient(uri);
 
 async function main(){
