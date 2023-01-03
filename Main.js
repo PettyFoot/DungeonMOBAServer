@@ -1,5 +1,5 @@
 //Mongo db stuff
-const MongoClient = require('mongodb').MongoClient
+/**const MongoClient = require('mongodb').MongoClient
 //I usually have proper password in <password>
 const uri = "mongodb+srv://usersDBAdmin:<password>@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
 const client = new MongoClient(uri);
@@ -12,7 +12,7 @@ async function main(){
     } catch (e) {
         console.error(e)
     }
-}
+} */
 /**
 
 async function main(){
@@ -37,15 +37,15 @@ var path = require('path');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
-//const mongoose = require('mongoose');
-//mongoose.connect("mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority")
-//.then(()=> console.log("DB connected")).catch(()=>console.log("Database connection error"));
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority")
+.then(()=> console.log("DB connected")).catch(()=>console.log("Database connection error"));
 
-//mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', true);
 
-//const userSchema = {
-   // userName: {type: String}
-//};
+const userSchema = {
+   userName: {type: String}
+};
 
 //const db = mongoose.model('User', userSchema);
 
