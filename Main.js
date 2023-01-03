@@ -40,7 +40,7 @@ const userSchema = {
 const db = mongoose.model('User', userSchema);
 
 app.put('/api/put/:user', async (req, res )=>{
-
+    console.log("hello");
     try {
         //const userAttempt = req.params.user;
         console.log("hello");
