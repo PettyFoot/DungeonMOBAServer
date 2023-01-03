@@ -17,7 +17,7 @@ async function main(){
     }
 } 
 
-await main();
+main();
 /**
 
 async function main(){
