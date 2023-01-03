@@ -63,6 +63,7 @@ app.put('/api/put/:user', async (req, res )=>{
         const rand = Math.floor(Math.random() * (10-1+1)) +1
         const newName = "user123" + rand.toString();
         console.log(rand);
+        console.log(userAttempt);
         const result = await updateListing(client, userAttempt, {userName: newName}); //This is how I want to do it
         console.log(result);
         res.end();
