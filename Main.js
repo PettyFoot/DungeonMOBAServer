@@ -82,17 +82,17 @@ async function listDatabases(client){
 app.get('/', (request, response)=>{
    // response.sendFile(__dirname + '/index.html');
     console.log("Made get request");
-})
+    response.end();
 
 
 app.get('/api', (request, response)=>{
    // response.json();
    console.log("Made get request with api");
-   
+   response.end();
 })
 
 app.post('/api/:user', (req, res) =>{
-
+    response.end();
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
