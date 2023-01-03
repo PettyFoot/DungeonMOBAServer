@@ -46,7 +46,7 @@ app.put('/api/put/:user', async (req, res )=>{
         console.log("hello");
        // db.findOneAndUpdate("User1234", {userName: "User1235"});
       //  const result = await updateListing(client, userAttempt, {userName: "user1235"}); //This is how I want to do it
-        console.log(userAttempt);
+       // console.log(userAttempt);
         res.end();
     } catch (error) {
         console.log(error);
