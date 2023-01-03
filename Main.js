@@ -30,6 +30,8 @@ const mongoose = require('mongoose');
 mongoose.connect("mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority")
 .then(()=> console.log("DB connected")).catch(()=>console.log("Database connection error"));
 
+mongoose.set('strictQuery', false);
+
 const userSchema = {
     userName: {type: String},
     password: {type: String},
