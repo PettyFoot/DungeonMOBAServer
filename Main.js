@@ -101,7 +101,7 @@ async function listDatabases(client){
     });
 }
 
-async function checkUser()
+
 
    /** await createListing(client, {
             userName: "user123",
