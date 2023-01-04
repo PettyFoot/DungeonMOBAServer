@@ -58,7 +58,7 @@ app.get('/api', (request, response)=>{
    response.end();
 })
 
-app.post('/api/createUser/:user', async (req, res) =>{
+app.get('/api/createUser/:user', async (req, res) =>{
     const userExists = await userAccounts.findOne({userName: req.params.user});
     if(userExists){
         res.json({userExists: true});
