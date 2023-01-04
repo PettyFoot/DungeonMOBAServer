@@ -67,16 +67,18 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     //try and find user
     const userFound = await userAccounts.findOne(req.body);
     if(userFound){
-    console.log("user exists");
-    res.json(userFound);
+        console.log("user exists");
+        res.json(userFound);
     }else
     {
     //check if username exists  and incorrect password
-    const userExists = await userAccounts.findOne({userName: req.params.user});
-    if(userExists){
-        res.json({userExists: "incorrect password"});
-    }
-    res.json({userExists: "user does not exist"});
+        const userExists = await userAccounts.findOne({userName: req.params.user});
+        if(userExists){
+            res.json({userExists: "incorrect password"});
+        }else{
+            res.json({userExists: "user does not exist"});
+        }
+        
     }
 })
 
@@ -89,20 +91,17 @@ app.post('/api/createUser/:user', async (req, res) =>{
         res.json({userCreated: "user already exists"});
     }else{
             //try and add user to db
-    const attemptAddUser = await userAccounts.insertOne(req.body);
-    if(attemptAddUser){
-        console.log("user created");
-        const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
-        const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
-        res.json({userCreated: "success"});
-    }else
-    {
+        const attemptAddUser = await userAccounts.insertOne(req.body);
+        if(attemptAddUser){
+            console.log("user created");
+            const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
+            const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
+            res.json({userCreated: "success"});
+        }else{
         console.log("user not created");
         res.json({userCreated: "failure"});
+        }
     }
-    }
-    
-    res.end();
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
