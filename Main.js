@@ -63,8 +63,15 @@ app.get('/api', (request, response)=>{
 
 app.post('/api/attemptLogin/:user', async (req, res)=>{
     console.log(req.body);
-   // const userExists = await userAccounts.findOne({userName: req.params.user});
-    res.json({userLogin: true});
+   const userExists = await userAccounts.findOne(req.body);
+   if(userExists){
+    console.log("user exists");
+    res.json({userExists: true});
+    }else
+    {
+    console.log("user does not exist");
+    res.json({userExists: false});
+    }
 })
 
 app.get('/api/createUser/:user', async (req, res) =>{
