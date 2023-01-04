@@ -82,6 +82,7 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
 
 app.post('/api/createUser/:user', async (req, res) =>{
     //double check user doesn't already exist
+    console.log("trying to create user");
     const userFound = await userAccounts.findOne({userName: req.params.user});
     if(userFound)
     {
