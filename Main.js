@@ -62,7 +62,7 @@ app.get('/api', (request, response)=>{
 })
 
 app.get('/api/attemptLogin/:user', async (req, res)=>{
-    console.log(req.params.user);
+    console.log(req.body);
    // const userExists = await userAccounts.findOne({userName: req.params.user});
     res.json({userLogin: true});
 })
