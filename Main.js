@@ -33,9 +33,10 @@ const userAccounts = db.collection("users");
 
 
 //Node API stuff
-app.put('/api/put/:user', async (req, res )=>{
+app.put('/api/put/:username&:password', async (req, res )=>{
     try {
-        const userAttempt = req.params.user;
+        const userAttempt = req.params.username;
+        const userPassword = req.params.password;
         console.log(userAttempt);
         const rand = Math.floor(Math.random() * (10-1+1)) +1
         const newName = "user123" + rand.toString();
@@ -58,6 +59,12 @@ app.get('/api', (request, response)=>{
    // response.json();
    console.log("Made get request with api");
    response.end();
+})
+
+app.get('/api/attemptLogin/:user', async (req, res)=>{
+    console.log(req.params.user);
+   // const userExists = await userAccounts.findOne({userName: req.params.user});
+    res.json({userLogin: true});
 })
 
 app.get('/api/createUser/:user', async (req, res) =>{
