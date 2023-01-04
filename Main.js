@@ -66,26 +66,25 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
    const userExists = await userAccounts.findOne(req.body);
    if(userExists){
     console.log("user exists");
-    res.json({userExists: true});
+    res.json(userExists);
     }else
     {
     console.log("user does not exist");
-    const attemptAddUser = await userAccounts.insertOne(req.body);
-    const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
-    const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
     res.json({userExists: false});
     }
 })
 
 app.get('/api/createUser/:user', async (req, res) =>{
-    const userExists = await userAccounts.findOne({userName: req.params.user});
-    if(userExists){
-        console.log("user exists");
-        res.json({userExists: true});
+    const attemptAddUser = await userAccounts.insertOne(req.body);
+    if(attemptAddUser){
+        console.log("user created");
+        const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
+        const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
+        res.json({userCreated: true});
     }else
     {
-        console.log("user does not exist");
-        res.json({userExists: false});
+        console.log("user not created");
+        res.json({userCreated: false});
     }
     res.end();
 })
