@@ -13,7 +13,7 @@ async function main(){
         //This works as expected
         //await updateListing(client, "user1235", {userName: "user123"}); 
     } catch (e) {
-        console.error(e)
+        console.error(e);
     }
 } 
 
