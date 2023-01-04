@@ -72,7 +72,7 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     }else
     {
     //check if username exists  and incorrect password
-    const userExists = await userAccounts.findOne(req.params.user);
+    const userExists = await userAccounts.findOne({userName: req.params.user});
     if(userExists){
         res.json({userExists: "incorrect password"});
     }
