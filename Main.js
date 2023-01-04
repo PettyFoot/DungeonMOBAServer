@@ -87,8 +87,8 @@ app.post('/api/createUser/:user', async (req, res) =>{
     if(userFound)
     {
         res.json({userCreated: "user already exists"});
-    }
-    //try and add user to db
+    }else{
+            //try and add user to db
     const attemptAddUser = await userAccounts.insertOne(req.body);
     if(attemptAddUser){
         console.log("user created");
@@ -100,6 +100,8 @@ app.post('/api/createUser/:user', async (req, res) =>{
         console.log("user not created");
         res.json({userCreated: "failure"});
     }
+    }
+    
     res.end();
 })
 
