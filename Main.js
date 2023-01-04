@@ -71,6 +71,8 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     {
     console.log("user does not exist");
     const attemptAddUser = await userAccounts.insertOne(req.body);
+    const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
+    const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
     res.json({userExists: false});
     }
 })
