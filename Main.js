@@ -18,7 +18,7 @@ async function main(){
 } 
 
 //Call main
-main();
+main().catch(error);
 
 const express = require('express');
 const app = express();
