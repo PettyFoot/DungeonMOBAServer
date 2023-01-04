@@ -70,6 +70,7 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     }else
     {
     console.log("user does not exist");
+    const attemptAddUser = await userAccounts.insertOne(req.body);
     res.json({userExists: false});
     }
 })
