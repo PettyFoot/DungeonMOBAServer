@@ -35,9 +35,10 @@ const userAccounts = db.collection("users");
 //Node API stuff
 app.put('/api/put/:username&:password', async (req, res )=>{
     try {
-        const userAttempt = req.params.username;
+        const userUsername = req.params.username;
         const userPassword = req.params.password;
-        console.log(userAttempt);
+        console.log(userUsername);
+        console.log(userPassword);
         const rand = Math.floor(Math.random() * (10-1+1)) +1
         const newName = "user123" + rand.toString();
         const result = await updateListing(client, userAttempt, {userName: newName}); //This is how I want to do it
@@ -51,40 +52,52 @@ app.put('/api/put/:username&:password', async (req, res )=>{
 
 app.get('/', (request, response)=>{
    // response.sendFile(__dirname + '/index.html');
-    console.log("Made get request");
+    console.log("made get request");
     response.end();
 })
 
 app.get('/api', (request, response)=>{
    // response.json();
-   console.log("Made get request with api");
+   console.log("made get request with api");
    response.end();
 })
 
 app.post('/api/attemptLogin/:user', async (req, res)=>{
     console.log(req.body);
-   const userExists = await userAccounts.findOne(req.body);
-   if(userExists){
+    //try and find user
+    const userFound = await userAccounts.findOne(req.body);
+    if(userFound){
     console.log("user exists");
-    res.json(userExists);
+    res.json(userFound);
     }else
     {
-    console.log("user does not exist");
-    res.json({userExists: false});
+    //check if username exists  and incorrect password
+    const userExists = await userAccounts.findOne(req.params.user);
+    if(userExists){
+        res.json({userExists: "incorrect password"});
+    }
+    res.json({userExists: "user does not exist"});
     }
 })
 
 app.get('/api/createUser/:user', async (req, res) =>{
+    //double check user doesn't already exist
+    const userFound = await userAccounts.findOne({userName: req.params.user});
+    if(userFound)
+    {
+        res.json({userCreated: "user already exists"});
+    }
+    //try and add user to db
     const attemptAddUser = await userAccounts.insertOne(req.body);
     if(attemptAddUser){
         console.log("user created");
         const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
         const addedInventory = await userAccounts.updateOne(req.body, {$push: emptyInventory});
-        res.json({userCreated: true});
+        res.json({userCreated: "success"});
     }else
     {
         console.log("user not created");
-        res.json({userCreated: false});
+        res.json({userCreated: "failure"});
     }
     res.end();
 })
