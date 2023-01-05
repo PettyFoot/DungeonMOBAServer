@@ -102,7 +102,8 @@ app.post('/api/createUser/:user', async (req, res) =>{
                 Inventory: [{name: '', description: '', class: 0, weight: 0, Value: 0}]
             }
             //Add empty inventory
-            const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
+            //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
+            const addedInventory = await userAccounts.insertOne(newUser);
             if(addedInventory)
             {
             res.json({userCreated: "success"});
