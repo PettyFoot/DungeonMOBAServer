@@ -94,13 +94,13 @@ app.post('/api/createUser/:user', async (req, res) =>{
         const attemptAddUser = await userAccounts.insertOne(req.body);
         if(attemptAddUser){
             console.log("user created");
-            const inventoryEmpty = {Inventory: [
+            const inventoryEmpty = {Inventory: 
                 {Weapons: [{}]}, 
                 {Armor: [{}]}, 
                 {Consumeable: [{}]}, 
                 {Treasure: [{}]}, 
                 {Quest: [{}]}
-            ]};
+            };
             const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
             const addedInventory = await userAccounts.updateOne(req.body, {$push: inventoryEmpty});
             res.json({userCreated: "success"});
