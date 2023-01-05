@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient
 //I usually have proper password in <password>
 const uri = "mongodb+srv://usersDBAdmin:password7@users.p6jfsqo.mongodb.net/?retryWrites=true&w=majority"; 
 const client = new MongoClient(uri);
-
+const userSchema = require('./user-schema');
 
 async function main(){
     try {
@@ -90,13 +90,19 @@ app.post('/api/createUser/:user', async (req, res) =>{
     {
         res.json({userCreated: "user already exists"});
     }else{
-            //try and add user to db
-        const attemptAddUser = await userAccounts.insertOne(req.body);
+        //try and add user to db
+        //const attemptAddUser = await userAccounts.insertOne(req.body);
         if(attemptAddUser){
             console.log("user created");
+            //Construct empty inventory
             const inventoryEmpty = {Inventory: [{}]};
-            const emptyInventory = {Inventory : [{Weapons: [{}]}, {Treasure: [{}]}, {QuestItems: [{}]}]}
-            const addedInventory = await userAccounts.updateOne(req.body, {$push: inventoryEmpty});
+            const newUser = {
+                username: req.params.user,
+                password: req.body.password,
+                Inventory: [{name: '', description: '', class: 0, weight: 0, Value: 0}]
+            }
+            //Add empty inventory
+            const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
             res.json({userCreated: "success"});
         }else{
         console.log("user not created");
