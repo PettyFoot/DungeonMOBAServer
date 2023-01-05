@@ -92,7 +92,7 @@ app.post('/api/createUser/:user', async (req, res) =>{
     }else{
         //try and add user to db
         //const attemptAddUser = await userAccounts.insertOne(req.body);
-        if(attemptAddUser){
+       // if(attemptAddUser){
             console.log("user created");
             //Construct empty inventory
             const inventoryEmpty = {Inventory: [{}]};
@@ -103,8 +103,11 @@ app.post('/api/createUser/:user', async (req, res) =>{
             }
             //Add empty inventory
             const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
+            if(addedInventory)
+            {
             res.json({userCreated: "success"});
-        }else{
+            }
+        else{
         console.log("user not created");
         res.json({userCreated: "failure"});
         }
