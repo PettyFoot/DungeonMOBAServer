@@ -110,7 +110,7 @@ app.post('/api/createUser/:user', async (req, res) =>{
         //try and add user to db
         //Construct empty inventory
         const newUser = {
-            username: req.params.user,
+            username: req.body.username,
             password: req.body.password,
             Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
         };
