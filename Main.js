@@ -113,7 +113,7 @@ app.post('/api/createUser/:user', async (req, res) =>{
             username: req.params.user,
             password: req.body.password,
             Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
-        }
+        };
         //Add empty inventory
         //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
         const addedInventory = await userAccounts.insertOne(newUser);
