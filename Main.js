@@ -100,13 +100,13 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
             Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
         } */
 
-app.post('/api/createUser/:user', async (req, res) =>{
-    //double check user doesn't already exist
+app.post('/api/createUser/:user', async (req, res) => {
     console.log(req.body);
     const userFound = await userAccounts.findOne({username: req.params.user});
     if(userFound){
         res.json({userCreated: "user already exists"});
     }else{
+
         //try and add user to db
         //Construct empty inventory
         const newUser = {
@@ -114,20 +114,21 @@ app.post('/api/createUser/:user', async (req, res) =>{
             password: req.body.password,
             Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
         };
+
         //Add empty inventory
         //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
         const addedInventory = await userAccounts.insertOne(newUser);
         if(addedInventory){
             console.log("user created");
             res.json({userCreated: "success"});
+        }else{
+            console.log("user not created");
+            res.json({userCreated: "failure"});
         }
-        else{
-        console.log("user not created");
-        res.json({userCreated: "failure"});
-        }
-          
+
     }
 })
+
 
 app.listen(process.env.PORT || PORT, ()=>{
     //console.log(`cool stuff on port ${PORT}`);
