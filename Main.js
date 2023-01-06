@@ -102,7 +102,7 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
 
 app.post('/api/createUser/:user', async (req, res) => {
     console.log(req.body);
-    const userFound = await userAccounts.findOne({username: req.params.user});
+    const userFound = await userAccounts.findOne({username: req.body.username});
     if(userFound){
         res.json({userCreated: "user already exists"});
     }else{
