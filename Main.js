@@ -41,7 +41,7 @@ app.put('/api/put/:username&:password', async (req, res )=>{
         console.log(userPassword);
         const rand = Math.floor(Math.random() * (10-1+1)) +1
         const newName = "user123" + rand.toString();
-        const result = await updateListing(client, userAttempt, {userName: newName}); //This is how I want to do it
+        const result = await updateListing(client, userAttempt, {username: newName}); //This is how I want to do it
         console.log(result);
         res.end();
     } catch (error) {
@@ -72,7 +72,7 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     }else
     {
     //check if username exists  and incorrect password
-        const userExists = await userAccounts.findOne({userName: req.params.user});
+        const userExists = await userAccounts.findOne({username: req.params.user});
         if(userExists){
             res.json({userExists: "incorrect password"});
         }else{
@@ -85,33 +85,30 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
 app.post('/api/createUser/:user', async (req, res) =>{
     //double check user doesn't already exist
     console.log(req.body);
-    const userFound = await userAccounts.findOne({userName: req.params.user});
-    if(userFound)
-    {
+    const userFound = await userAccounts.findOne({username: req.params.user});
+    if(userFound){
         res.json({userCreated: "user already exists"});
     }else{
         //try and add user to db
-        //const attemptAddUser = await userAccounts.insertOne(req.body);
-       // if(attemptAddUser){
+        //Construct empty inventory
+        const inventoryEmpty = {Inventory: [{}]};
+        const newUser = {
+            username: req.params.user,
+            password: req.body.password,
+            Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
+        }
+        //Add empty inventory
+        //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
+        const addedInventory = await userAccounts.insertOne(newUser);
+        if(addedInventory){
             console.log("user created");
-            //Construct empty inventory
-            const inventoryEmpty = {Inventory: [{}]};
-            const newUser = {
-                username: req.params.user,
-                password: req.body.password,
-                Inventory: [{name: '', description: '', class: 0, weight: 0, Value: 0}]
-            }
-            //Add empty inventory
-            //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
-            const addedInventory = await userAccounts.insertOne(newUser);
-            if(addedInventory)
-            {
             res.json({userCreated: "success"});
-            }
+        }
         else{
         console.log("user not created");
         res.json({userCreated: "failure"});
         }
+          
     }
 })
 
