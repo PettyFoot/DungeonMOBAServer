@@ -82,6 +82,18 @@ app.post('/api/attemptLogin/:user', async (req, res)=>{
     }
 })
 
+/*** const newUser = {
+            username: req.params.user,
+            password: req.body.password,
+            Inventory: [
+            {name: 'smg', description: 'fast shooter', class: 1, weight: 20, value: 50, basedamage: 10, critmultiplier: 1.5, magcapacity: 30, ammoinchamber: 20, level: 1, firerate: 1}, 
+            {name: 'veterrli', description: 'long range bolt', class: 1, weight: 35, value: 100, basedamage: 25, critmultiplier: 2.25, magcapacity: 12, ammoinchamber: 8, level: 3, firerate: 2},
+            {name: 'battle rifle', description: 'burster', class: 1, weight: 30, value: 225, basedamage: 15, critmultiplier: 3.75, magcapacity: 45, ammoinchamber: 10, level: 6, firerate: 3},
+            {name: 'cloth helmet', description: 'covering heads', class: 2, weight: 25, value: 125, slot: 1, type: 1, armor: 50 },
+            {name: 'cyber chest', description: 'protect heart and lungs', class: 2, weight: 55, value: 325, slot: 2, type: 2, armor: 150},
+            {name: 'bulwark pants', description: 'heavy plating pants', class: 2, weight: 65, value: 250, slot: 3, type: 3, armor: 225}
+        ]} */
+
 /**const newUser = {
             username: req.params.user,
             password: req.body.password,
@@ -97,18 +109,10 @@ app.post('/api/createUser/:user', async (req, res) =>{
     }else{
         //try and add user to db
         //Construct empty inventory
-        const inventoryEmpty = {Inventory: [{}]};
         const newUser = {
             username: req.params.user,
             password: req.body.password,
-            Inventory: [
-            {name: 'smg', description: 'fast shooter', class: 1, weight: 20, value: 50, basedamage: 10, critmultiplier: 1.5, magcapacity: 30, ammoinchamber: 20, level: 1, firerate: 1}, 
-            {name: 'veterrli', description: 'long range bolt', class: 1, weight: 35, value: 100, basedamage: 25, critmultiplier: 2.25, magcapacity: 12, ammoinchamber: 8, level: 3, firerate: 2},
-            {name: 'battle rifle', description: 'burster', class: 1, weight: 30, value: 225, basedamage: 15, critmultiplier: 3.75, magcapacity: 45, ammoinchamber: 10, level: 6, firerate: 3},
-            {name: 'cloth helmet', description: 'covering heads', class: 2, weight: 25, value: 125, slot: 1, type: 1, armor: 50 },
-            {name: 'cyber chest', description: 'protect heart and lungs', class: 2, weight: 55, value: 325, slot: 2, type: 2, armor: 150},
-            {name: 'bulwark pants', description: 'heavy plating pants', class: 2, weight: 65, value: 250, slot: 3, type: 3, armor: 225}
-        ]
+            Inventory: [{name: '', description: '', class: 0, weight: 0, value: 0}]
         }
         //Add empty inventory
         //const addedInventory = await userAccounts.updateOne(req.body, {$push: newUser});
