@@ -165,7 +165,7 @@ async function updateListing(client, listingToUpdate, updateListing){
     
     try {
         console.log("Attempting to add to db");
-        const result = await userAccounts.updateOne({userName: listingToUpdate }, {$set: updateListing});
+        const result = await userAccounts.updateOne(listingToUpdate, {$set: updateListing});
         console.log(`${result.matchedCount} docs found`);
         console.log(`${result.modifiedCount} docs updated`);
     }catch(error){
