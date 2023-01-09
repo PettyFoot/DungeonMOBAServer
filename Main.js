@@ -136,6 +136,25 @@ app.post('/api/createUser/:user', async (req, res) => {
 })
 
 
+app.post('/api/updateInventory/:user', async (req, res) => {
+    console.log(req.body);
+    const userFound = await userAccounts.findOne({username: req.params.user});
+    if(userFound){
+        const userUpdated = await updateListing(client, {username: req.params.user}, req.body);
+        if(userUpdated){
+            console.log("user updated");
+            res.json({userUpdate: "success"});
+        }else{
+            console.log("user not updated");
+            res.json({userUpdate: "not updated"});
+        }
+    }else{
+        console.log("user not found");
+        res.json({userUpdate: "user not found"});
+    }
+
+})
+
 app.listen(process.env.PORT || PORT, ()=>{
     //console.log(`cool stuff on port ${PORT}`);
 });
