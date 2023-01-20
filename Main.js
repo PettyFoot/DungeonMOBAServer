@@ -137,7 +137,7 @@ app.post('/api/createUser/:user', async (req, res) => {
 
 
 app.post('/api/updateInventory/:user', async (req, res) => {
-    console.log(req.body);
+    console.log(req.body.Inventory);
     const userFound = await userAccounts.findOne({username: req.params.user});
     if(userFound){
         const userUpdated = await updateListing(client, {username: req.params.user}, req.body.Inventory);
