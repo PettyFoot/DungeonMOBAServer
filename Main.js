@@ -137,7 +137,7 @@ app.post('/api/createUser/:user', async (req, res) => {
 
 
 app.post('/api/updateInventory/:user', async (req, res) => {
-    console.log(req.body.Inventory);
+    console.log(req.body);
     const userFound = await userAccounts.findOne({username: req.params.user});
     if(userFound){
         const userUpdated = await updateListing(client, {username: req.params.user}, req.body.Inventory);
@@ -165,7 +165,7 @@ async function updateListing(client, listingToUpdate, updateListing){
     
     try {
         console.log("Attempting to add to db");
-        const result = await userAccounts.updateOne(listingToUpdate, {$mod: updateListing});
+        const result = await userAccounts.updateOne(listingToUpdate, {$set: {Inventory: updateListing}});
         console.log(`${result.matchedCount} docs found`);
         console.log(`${result.modifiedCount} docs updated`);
     }catch(error){
